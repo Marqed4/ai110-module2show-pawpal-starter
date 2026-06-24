@@ -1,7 +1,7 @@
 from pawpal_system import Owner, Pet, Task, Scheduler
 
 # --- Setup ---
-owner = Owner(name="Jordan", available_minutes=120, preferred_start_time="08:00")
+owner = Owner(name="Zachery", available_minutes=120, preferred_start_time="08:00")
 
 lisa = Pet(name="Lisa", species="cat", breed="Domestic Shorthair")
 lisa.add_task(Task(title="Morning feeding",   duration_minutes=10, priority="high"))

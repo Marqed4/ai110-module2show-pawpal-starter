@@ -47,7 +47,7 @@ pip install -r requirements.txt
 ```
 =======================================================
         TODAY'S SCHEDULE
-  Owner: Jordan  |  Available: 120 min
+  Owner: Zachery  |  Available: 120 min
 =======================================================
 
 Daily plan for Lisa (cat):

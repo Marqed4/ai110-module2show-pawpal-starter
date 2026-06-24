@@ -1,5 +1,10 @@
 import streamlit as st
 
+'''
+Later when expanding this project consider 
+RAG or SQLite for data persistence.
+'''
+
 st.set_page_config(page_title="PawPal+", page_icon="🐾", layout="centered")
 
 st.title("🐾 PawPal+")
@@ -39,8 +44,8 @@ At minimum, your system should:
 st.divider()
 
 st.subheader("Quick Demo Inputs (UI only)")
-owner_name = st.text_input("Owner name", value="Jordan")
-pet_name = st.text_input("Pet name", value="Mochi")
+owner_name = st.text_input("Owner name", value="Zachery")
+pet_name = st.text_input("Pet name", value="Lisa")
 species = st.selectbox("Species", ["dog", "cat", "other"])
 
 st.markdown("### Tasks")
