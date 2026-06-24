@@ -44,14 +44,25 @@ pip install -r requirements.txt
 
 ## 🖥️ Sample Output
 
-Paste a sample of your app's CLI or Streamlit output here so a reader can see what a generated plan looks like:
-
 ```
-# e.g.:
-# Daily plan for Biscuit (Golden Retriever):
-#   08:00 — Morning walk (30 min) [priority: high]
-#   09:00 — Feeding (10 min) [priority: high]
-#   ...
+=======================================================
+        TODAY'S SCHEDULE
+  Owner: Jordan  |  Available: 120 min
+=======================================================
+
+Daily plan for Lisa (cat):
+  08:00 - 08:10  Morning feeding (10 min) [high]  -- Priority: high. Fits within remaining window (120 min left).
+  08:10 - 08:20  Brushing (10 min) [medium]  -- Priority: medium. Fits within remaining window (110 min left).
+  08:20 - 08:35  Litter box clean (15 min) [medium]  -- Priority: medium. Fits within remaining window (100 min left).
+  08:35 - 08:55  Enrichment play (20 min) [low]  -- Priority: low. Fits within remaining window (85 min left).
+
+Daily plan for Maggie (cat):
+  08:00 - 08:05  Medication (5 min) [high]  -- Priority: high. Fits within remaining window (120 min left).
+  08:05 - 08:15  Breakfast (10 min) [high]  -- Priority: high. Fits within remaining window (115 min left).
+  08:15 - 08:30  Vet weight check (15 min) [medium]  -- Priority: medium. Fits within remaining window (105 min left).
+  08:30 - 08:55  Lap time (25 min) [low]  -- Priority: low. Fits within remaining window (90 min left).
+
+All done.
 ```
 
 ## 🧪 Testing PawPal+
