@@ -6,6 +6,7 @@ classDiagram
         +str preferred_start_time
         +list~Pet~ pets
         +add_pet(pet: Pet) void
+        +get_all_tasks() list~Task~
     }
 
     class Pet {
@@ -20,8 +21,8 @@ classDiagram
     class Task {
         +str title
         +int duration_minutes
-        +str priority
-        +str frequency
+        +Literal priority
+        +Literal frequency
         +bool completed
         +mark_complete() void
         +priority_rank() int
@@ -37,11 +38,12 @@ classDiagram
     class Scheduler {
         +Owner owner
         +Pet pet
-        +str start_time
         +list~ScheduledTask~ schedule
-        +generate() list~ScheduledTask~
+        +generate(day_of_week: int) list~ScheduledTask~
         +_sort_tasks(tasks: list) list
         +_fits_in_window(task: Task, remaining: int) bool
+        +_filter_by_frequency(tasks: list, day_of_week: int) list
+        +_time_after(start: str, minutes: int) str
         +explain() str
     }
 
