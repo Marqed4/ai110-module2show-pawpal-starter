@@ -37,6 +37,11 @@ As `preferred_start_time` is an `"HH:MM"` string, and `generate()` will be advan
 4. Unused `Optional` import removed.**
 It was not used in the file.
 
+5. `preferred_time` field added to `Task` and scheduling logic updated.**
+After initial implementation it became clear that duration alone was not enough for practical use. Owners who are busy one week but free the next often have tasks that only make sense at a particular part of the day (for example, a morning walk or an evening feeding). A `preferred_time: Literal["morning", "afternoon", "evening", "any"]` field was added to `Task` with `"any"` as the default so existing tasks are unaffected.
+
+Two corresponding changes were made to `Scheduler`: `_sort_tasks` now orders tasks by time window first (morning, then afternoon, then evening, then any) before applying priority, and a new `_earliest_start` helper advances the virtual clock to the window's start time when a task hasn't been reached yet. This means a task marked "morning" will never be pushed into the afternoon simply because a high-priority task ran long. The UML class diagram should be updated to add the `preferred_time` attribute to `Task` and the `_earliest_start` method to `Scheduler`.
+
 ---
 
 ## 2. Scheduling Logic and Tradeoffs
@@ -48,8 +53,17 @@ It was not used in the file.
 
 **b. Tradeoffs**
 
-- Describe one tradeoff your scheduler makes.
-- Why is that tradeoff reasonable for this scenario?
+**Greedy scheduling over time windows vs. exact conflict-free slot assignment**
+
+The scheduler uses a greedy pass: it sorts tasks by preferred time window and priority, then places each one sequentially, advancing a virtual clock. This means within a single pet's schedule there can be no overlap — tasks are placed one after another. However, it does not attempt to find a globally optimal arrangement that avoids cross-pet conflicts; it simply flags them after the fact.
+
+The conflict detector (`detect_conflicts` and `detect_cross_pet_conflicts`) checks overlapping time windows — `b.start_time < a.end_time` — rather than only exact start-time matches. An exact-match check is simpler to write (`a.start_time == b.start_time`) but would silently miss the case where one task starts mid-way through another. The overlap check catches both cases with almost the same code.
+
+The tradeoff is that the scheduler doesn't automatically reschedule around conflicts — it only warns. This is reasonable for PawPal+ because the owner should make the final call on which task to move or drop rather than having the app silently reorder tasks that may have external constraints (e.g., a vet appointment time that cannot shift).
+
+**`_sort_tasks` tuple key — readability vs. a separate comparator**
+
+The sorting key `lambda t: (time_order[t.preferred_time], -t.priority_rank(), t.duration_minutes)` packs three sort criteria into one tuple. An alternative would be multiple `sorted()` calls (sort by duration, then re-sort by priority, then re-sort by time window). Python's sort is stable, so chained single-key sorts produce the same result — but three passes are harder to read as a unit. The tuple key was kept because it expresses the full priority order in one line, and any future reader can see at a glance which criterion wins when two tasks tie.
 
 ---
 

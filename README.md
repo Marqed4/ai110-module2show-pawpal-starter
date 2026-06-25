@@ -83,14 +83,15 @@ Sample test output:
 
 ## 📐 Smarter Scheduling
 
-> Fill in once you've implemented scheduling logic.
-
 | Feature | Method(s) | Notes |
 |---------|-----------|-------|
-| Task sorting | | e.g., by priority, duration |
-| Filtering | | e.g., skip tasks if time runs out |
-| Conflict handling | | e.g., overlapping time slots |
-| Recurring tasks | | e.g., daily vs. weekly |
+| Sort by clock time | `Scheduler.sort_by_time()` | Sorts `ScheduledTask` objects by `start_time`; "HH:MM" zero-padding means lexicographic order equals chronological order — no datetime parsing needed |
+| Sort by priority + time window | `Scheduler._sort_tasks()` | Pre-schedules tasks using a tuple key: preferred time window first (morning → afternoon → evening → any), then priority descending, then duration ascending to break ties |
+| Filter by pet or status | `Owner.filter_tasks(pet_name, completed)` | Returns `(pet_name, Task)` pairs; omit either argument to skip that filter. Useful for "show me all pending tasks" or "show only Maggie's tasks" |
+| Within-pet conflict detection | `Scheduler.detect_conflicts()` | Compares overlapping time windows after sorting; returns human-readable warning strings, never raises |
+| Cross-pet conflict detection | `detect_cross_pet_conflicts(schedulers)` | Module-level function; checks all pets' schedules together since one owner cannot be in two places at once |
+| Recurring tasks | `Task.next_occurrence(from_date)` | Returns a cloned `Task` due `timedelta(days=N)` later: daily=+1, weekly=+7, monthly=+30 |
+| Complete and re-queue | `Pet.complete_task(title, today)` | Marks the matching task done and appends its next occurrence to the pet's task list automatically |
 
 ## 📸 Demo Walkthrough
 

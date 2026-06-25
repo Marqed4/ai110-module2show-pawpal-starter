@@ -13,6 +13,8 @@ classDiagram
         +str name
         +str species
         +str breed
+        +int|None age
+        +Literal gender
         +list~Task~ tasks
         +add_task(task: Task) void
         +remove_task(title: str) void
@@ -23,6 +25,7 @@ classDiagram
         +int duration_minutes
         +Literal priority
         +Literal frequency
+        +Literal preferred_time
         +bool completed
         +mark_complete() void
         +priority_rank() int
@@ -43,6 +46,7 @@ classDiagram
         +_sort_tasks(tasks: list) list
         +_fits_in_window(task: Task, remaining: int) bool
         +_filter_by_frequency(tasks: list, day_of_week: int) list
+        +_earliest_start(current_time: str, preferred_time: str) str
         +_time_after(start: str, minutes: int) str
         +explain() str
     }
